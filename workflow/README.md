@@ -25,7 +25,6 @@ cp specs/examples/pwm_generator.md specs/pending/my_component.md
 - For students, beginners, clear requirements, pattern-matched components
 - Claude infers defaults, proposes complete spec with 2-3 critical questions
 - Fast iteration and prototyping
-- **Output Style Tip:** Use `/output-style learning` for collaborative, educational experience
 - See `AI_FIRST_REQUIREMENTS.md`
 
 **ALTERNATIVE: Engineer Workflow (Detailed Control - 15-30 minutes)**
@@ -272,15 +271,11 @@ Then reference it: `"Follow workflow/prompts/my-custom-workflow.md"`
 - `specs/README.md` - Spec writing guide
 - `specs/reference/README.md` - Gold-standard pattern library
 
-## Output Styles (Claude Code Feature)
+## Output Styles (Future Feature)
 
-**For Students:** Use `/output-style learning` to enable collaborative, educational mode:
-- Claude explains reasoning while working
-- Adds TODO(human) markers for student contribution
+**Note:** Output style customization is a planned feature for future Claude Code releases. When available, it will enable:
+- Collaborative learning mode with explanatory comments
+- TODO(human) markers for student contribution points
 - Interactive pair-programming experience
-- Perfect complement to AI-First workflow
 
-**Other Options:**
-- `/output-style` - View all available styles
-- `/output-style explanatory` - Detailed explanations without TODOs
-- `/output-style:new I want...` - Create custom style
+Stay tuned for updates in future releases.

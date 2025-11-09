@@ -64,6 +64,16 @@ TESTS_CONFIG = {
         category="utilities",
     ),
 
+    "forge_util_edge_detector_pw": TestConfig(
+        name="forge_util_edge_detector_pw",
+        sources=[
+            PROJECT_ROOT / "workflow" / "artifacts" / "vhdl" / "forge_util_edge_detector_pw.vhd",
+        ],
+        toplevel="forge_util_edge_detector_pw",
+        test_module="components.test_forge_util_edge_detector_pw_progressive",
+        category="utilities",
+    ),
+
     # === Packages ===
 
     "forge_lut_pkg": TestConfig(

@@ -95,7 +95,6 @@ docs/               # Testing standards, guides, patterns
 - **Features:** Fast iteration, intelligent inference, pattern-based defaults
 - **Best for:** Students, beginners, clear requirements, pattern-matched components
 - **Usage:** "I need a [component description]. Use the AI-First requirements workflow."
-- **Tip:** Use `/output-style learning` for collaborative, educational experience
 
 **Engineer Requirements** (`workflow/ENGINEER_REQUIREMENTS.md`) - For Detailed Technical Control
 - **Purpose:** Comprehensive requirements gathering through 7-phase Q&A
@@ -137,8 +136,7 @@ docs/               # Testing standards, guides, patterns
 ### Quick Start Pattern
 
 **For brand new components (DEFAULT - Students/Beginners):**
-1. (Optional) Enable learning mode: `/output-style learning`
-2. **AI-First requirements** - Ask Claude: "I need a [component description]. Use the AI-First requirements workflow."
+1. **AI-First requirements** - Ask Claude: "I need a [component description]. Use the AI-First requirements workflow."
 3. **Spec proposed** - Claude proposes complete spec after 2-3 critical questions
 4. **Review/refine** - Approve or refine defaults
 5. **Automated workflow** - Run 3-agent workflow on spec → Generates VHDL + tests
