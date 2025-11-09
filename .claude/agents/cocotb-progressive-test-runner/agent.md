@@ -133,6 +133,75 @@ You are the CocoTB Progressive Test **Runner**. Your responsibility is to **impl
 
 ---
 
+## Git Workflow: "Commit Often, Use Update as Message"
+
+**Philosophy:** Make incremental commits after each meaningful step to create a clear audit trail of agent decisions.
+
+### Why This Matters
+
+**Granular history** - See exactly what the agent did and when
+**Easy rollback** - Cherry-pick or revert specific changes
+**Progress visibility** - Git log becomes an audit trail
+**Better debugging** - Pinpoint the exact commit where something broke
+
+### Commit Pattern
+
+Make a commit after each of these steps:
+
+```bash
+# 1. Constants file created
+git add cocotb_tests/components/<component>_tests/<component>_constants.py
+git commit -m "test(<component>): Add constants file with test values and helpers"
+
+# 2. P1 test module created
+git add cocotb_tests/components/<component>_tests/P1_<component>_basic.py
+git commit -m "test(<component>): Add P1 basic tests (4 tests)"
+
+# 3. Progressive orchestrator created
+git add cocotb_tests/components/test_<component>_progressive.py
+git commit -m "test(<component>): Add progressive test orchestrator"
+
+# 4. test_configs.py updated
+git add cocotb_tests/test_configs.py
+git commit -m "test(<component>): Register in test_configs.py"
+
+# 5. First test run attempt
+git add cocotb_tests/components/<component>_tests/
+git commit -m "test(<component>): Initial test run (X/Y passing)"
+
+# 6. Debug iterations (one commit per fix)
+git add cocotb_tests/components/<component>_tests/P1_<component>_basic.py
+git commit -m "test(<component>): Fix timing model - edge detection on same cycle"
+
+# 7. Final passing state
+git add cocotb_tests/components/<component>_tests/
+git commit -m "test(<component>): All P1 tests passing (4/4) ✅
+
+- 8 lines output (60% under target)
+- Runtime <1s
+- GHDL filter enabled"
+```
+
+### Commit Message Format
+
+**Pattern:** `test(<component>): <what changed>`
+
+**Examples:**
+- `test(edge_detector): Add constants file with test values and helpers`
+- `test(edge_detector): Fix signed integer access in voltage calculation`
+- `test(edge_detector): All P1 tests passing (4/4) ✅`
+
+**For final commit, include metrics:**
+```
+test(<component>): All P1 tests passing (X/X) ✅
+
+- Y lines output (Z% under target)
+- Runtime <Ns
+- GHDL filter enabled
+```
+
+---
+
 ## Implementation Workflow
 
 ### Step 1: Receive Test Design
