@@ -292,6 +292,9 @@ Agent 1 (VHDL) ║ Agent 2 (Test Design)
 
 ---
 
-**Last Updated:** 2025-11-08
+**Last Updated:** 2025-11-09
+**Version:** 3.2.0
 **Agent Count:** 4 (forge-new-component, forge-vhdl-component-generator, cocotb-progressive-test-designer, cocotb-progressive-test-runner)
-**Status:** ✅ Production-ready
+**Status:** ✅ Production-ready, template-ready
+**Template Origin:** https://github.com/vmars-20/forge-vhdl-3v3-vmars
+**Example Workflow:** See `claude` branch for complete execution example

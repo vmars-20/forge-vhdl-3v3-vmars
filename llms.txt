@@ -1,14 +1,15 @@
-# moku-instrument-forge-vhdl
+# forge-vhdl: AI-Powered VHDL Development Template
 
-**Cloud-first VHDL framework for Moku custom instrument development with AI-assisted workflows**
+**GitHub template for VHDL development with Claude Code - optimized for LLM-assisted workflows**
 
 ## Quick Reference
 
-**What:** Reusable VHDL components with token-efficient CocoTB tests
-**Where:** Works in Claude Code Web, GitHub Codespaces, local environments
-**Cloud Setup:** One command: `uv run python scripts/cloud_setup_with_ghdl.py`
-**Test:** CocoTB + GHDL filter (P1 tests <20 lines, 98% noise reduction)
+**What:** Production-ready GitHub template with reusable VHDL components + token-efficient CocoTB tests
+**Where:** Works everywhere - Claude Code Web, GitHub Codespaces, local CLI (auto-detects!)
+**Setup:** Zero config in cloud • `brew install ghdl` for local • Env detection: `uv run python .claude/env_detect.py`
+**Test:** CocoTB + GHDL filter (P1 tests <20 lines, 98% noise reduction vs 287 lines)
 **Workflow:** Hybrid recommended - Requirements locally → Agents in cloud → Integrate locally
+**Template:** Clone from https://github.com/vmars-20/forge-vhdl-3v3-vmars → Customize your copy!
 
 ## Structure
 
@@ -147,6 +148,10 @@ docs/               # Testing standards, guides, patterns
 6. **Local:** Pull results: `git pull`
 7. **Local:** Integrate: `mv workflow/artifacts/vhdl/[component].vhd vhdl/components/[category]/`
 
+**💡 Example workflow:** See `claude` branch for complete agent execution example!
+- `git fetch origin claude && git log origin/claude --oneline` - View incremental commits
+- `git diff main...origin/claude` - See generated artifacts
+
 **Why hybrid?**
 - Local CLI: Fast interactive requirements (output settings control)
 - Claude Web: Unlimited agent execution (no token limits, auto GHDL setup, incremental commits)
@@ -218,10 +223,17 @@ pytest python_tests/ --cov=python/
 
 ## Integration Pattern
 
-Used as submodule in `moku-instrument-forge-mono-repo`:
+**This is a GitHub template repository!**
 
+**To use:**
+1. Click "Use this template" → Create your own repository
+2. Clone your repository: `git clone https://github.com/YOUR-USERNAME/YOUR-REPO-NAME`
+3. Update README.md with your repository URL (lines 47, 51, 500)
+4. Start building components!
+
+**Can also be used as a git submodule:**
 ```bash
-git submodule add https://github.com/sealablab/moku-instrument-forge-vhdl.git libs/forge-vhdl
+git submodule add https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git libs/forge-vhdl
 ```
 
 VHDL files compiled with GHDL via CocoTB test infrastructure.
@@ -326,9 +338,12 @@ pytest python_tests/test_hierarchical_decoder.py
 - Design/testing question? → Read CLAUDE.md
 - Workflow question? → Read workflow/README.md
 - Specific error/deep dive? → Read Tier 3 docs
+- Example workflow? → Check `claude` branch (git fetch origin claude)
 
 ---
 
-**Version:** 3.1.0 (aligned with parent monorepo 3-tier pattern)
+**Version:** 3.2.0 (template-ready, environment-aware)
+**Original Template:** https://github.com/vmars-20/forge-vhdl-3v3-vmars
 **License:** MIT
-**Standalone:** Yes (works outside monorepo)
+**Type:** Standalone GitHub template (clone and customize!)
+**Example Workflow:** See `claude` branch for complete 3-agent execution example

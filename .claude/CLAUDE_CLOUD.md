@@ -425,6 +425,9 @@ See `docs/COCOTB_TROUBLESHOOTING.md` Section 0.
 **Environment:** Cloud (Claude Code Web / GitHub Codespaces)
 **GHDL Status:** ✅ Installed and Validated (hard requirement)
 **Recommended Workflow:** AI-First (students) or Engineer (advanced)
+**Template Origin:** https://github.com/vmars-20/forge-vhdl-3v3-vmars
+**Example Workflow:** Check `claude` branch: `git fetch origin claude && git log origin/claude --oneline`
 
 **Last Updated:** 2025-11-09
+**Version:** 3.2.0 (template-ready)
 **Maintainer:** Moku Instrument Forge Team

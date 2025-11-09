@@ -445,6 +445,9 @@ git push origin <your-feature-branch>
 **Environment:** Local (Claude Code CLI)
 **GHDL Status:** {{ "Installed" if ghdl_found else "Not Installed" }}
 **Recommended Workflow:** AI-First (students) or Engineer (advanced)
+**Template Origin:** https://github.com/vmars-20/forge-vhdl-3v3-vmars
+**Example Workflow:** Check `claude` branch: `git fetch origin claude && git log origin/claude --oneline`
 
 **Last Updated:** 2025-11-09
+**Version:** 3.2.0 (template-ready)
 **Maintainer:** Moku Instrument Forge Team
