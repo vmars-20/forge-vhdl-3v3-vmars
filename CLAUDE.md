@@ -103,13 +103,14 @@ uv run python .claude/env_detect.py
 - ✅ Incremental git commits (audit trail)
 
 **Use for:**
-1. Open repository in Claude Web
-2. Say: "Read workflow/specs/pending/[component].md and execute 3-agent workflow"
-3. Agents run autonomously:
+1. Open Claude Web (https://claude.ai/code/)
+2. Select repository from dropdown + choose cloud environment
+3. Say: "Read workflow/specs/pending/[component].md and execute 3-agent workflow"
+4. Agents run autonomously in sandbox branch (`claude/xxxxyyyy`):
    - Agent 1: Generate VHDL
    - Agent 2: Design tests
    - Agent 3: Implement & run tests (with incremental commits!)
-4. Pull results back locally
+5. Pull results back locally (auto-merges sandbox work to main)
 
 ### Local CLI → Integration
 
@@ -130,25 +131,23 @@ git commit -m "spec: Add [component]"
 git push
 
 # Cloud: Run agents (in Claude Web browser)
-"Read workflow/specs/pending/[component].md and execute 3-agent workflow"
+# Navigate to https://claude.ai/code/
+# Select your repository + cloud environment (see static/Claude-WEB-ui-new-session.png)
+# Say: "Read workflow/specs/pending/[component].md and execute 3-agent workflow"
+# Agents work in sandbox branch (claude/xxxxyyyy) with incremental commits
 
 # Local: Pull & integrate
-git pull
+git pull  # Auto-merges sandbox branch work to main
 mv workflow/artifacts/vhdl/[component].vhd vhdl/components/[category]/
 # Tests already in cocotb_tests/
 ```
 
 **Why this works:**
 - **Local CLI** = Interactive gathering (fast, controlled)
-- **Claude Web** = Long-running agents (unlimited, autonomous)
+- **Claude Web** = Long-running agents (unlimited, autonomous, sandbox branch isolation)
 - **Local CLI** = Final review (familiar tooling)
 
-**💡 See it in action:** Check the `claude` branch for a complete example of agent execution!
-```bash
-git fetch origin claude
-git log origin/claude --oneline  # See incremental commit pattern
-git diff main...origin/claude    # See generated artifacts
-```
+**Note:** Claude Web always starts from `main` branch (no branch selection in UI). It creates a temporary sandbox branch (`claude/xxxxyyyy`) that automatically merges back when you pull.
 
 ---
 
