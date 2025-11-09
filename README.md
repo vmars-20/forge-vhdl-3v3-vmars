@@ -23,12 +23,27 @@ git clone git@github.com:YOUR-USERNAME/YOUR-REPO-NAME.git
 cd YOUR-REPO-NAME
 uv sync
 claude
+```
+
+### 3. Configure Output Style (Recommended)
+
+Before running `/forge-start`, set your preferred output style to **"Explanatory"** for the best experience. This helps Claude explain implementation choices and codebase patterns.
+
+Run `/config` in the Claude CLI and select:
+
+![Preferred Output Style - Select Explanatory](static/claude-select-explanatory-reccomended.png)
+
+**Why Explanatory mode?** Claude will explain its VHDL design decisions, helping you understand the generated code and learn best practices.
+
+### 4. Build Your Component
+
+Run the interactive workflow:
+
+```bash
 /forge-start
 ```
 
-### 3. Build Your Component
-
-The interactive workflow starts automatically:
+The workflow starts automatically:
 
 ![Claude CLI Running](static/Local-CLI-Running-user-input.png)
 
@@ -373,13 +388,16 @@ echo $GHDL_FILTER_LEVEL  # Should be "aggressive"
 
 See `docs/PROGRESSIVE_TESTING_GUIDE.md`
 
-### "Can't find /forge-start command"
+### "Can't find /forge-start command" or unexpected behavior
 
-Verify Claude Code CLI output settings:
+Verify Claude Code CLI output settings. The recommended setting is **"Explanatory"** mode:
 
-![Output Settings](static/Claude-CLI-output-settings.png)
+![Preferred Output Style - Select Explanatory](static/claude-select-explanatory-reccomended.png)
 
-Run `/config` to check settings.
+**To configure:**
+1. Run `/config` in the Claude CLI
+2. Select **"Explanatory"** from the output style options
+3. This ensures Claude explains implementation choices and responds to slash commands properly
 
 ---
 
@@ -391,6 +409,7 @@ After creating your repository:
 - [ ] Run `uv sync`
 - [ ] Install GHDL (if local development)
 - [ ] Run `uv run python .claude/env_detect.py`
+- [ ] Configure Claude CLI: Run `claude` then `/config` and select **"Explanatory"** output style
 - [ ] Update this README with your repository URL
 - [ ] Try first component: `claude` then `/forge-start`
 - [ ] Verify P1 test output <20 lines
@@ -437,6 +456,7 @@ git clone git@github.com:YOUR-USERNAME/YOUR-REPO-NAME.git
 cd YOUR-REPO-NAME
 uv sync
 claude
+# Run /config and select "Explanatory" output style (recommended)
 /forge-start
 ```
 
