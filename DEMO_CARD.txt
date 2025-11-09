@@ -1,0 +1,95 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                    FORGE-VHDL DEMO SESSION CARD                          ║
+║                 Interactive VHDL Component Development                   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+Hi! I'd like to demonstrate the forge-vhdl workflow by creating a simple
+VHDL component together. This will showcase the interactive requirements
+gathering and automated agent workflow.
+
+DEMO TASK:
+----------
+Create a "debouncer" component - removes mechanical switch noise by requiring
+a stable signal for a specified duration before changing output.
+
+Use case: Push button reads '1' when pressed, but mechanically bounces
+(1-0-1-0-1) for ~10ms. Debouncer ensures clean single transition.
+
+REQUIREMENTS TO GATHER:
+-----------------------
+You'll ask me questions across 7 phases:
+1. Identification: Name (forge_util_debouncer), category (utilities)
+2. Functionality: Stable time requirement, clock-based counter
+3. Interface: Ports (clk, rst_n, noisy_in, clean_out), generics (STABLE_CYCLES)
+4. Behavior: Counter-based FSM (UNSTABLE → COUNTING → STABLE)
+5. Testing: P1 tests (reset, bounce filtering, stable detection)
+6. Design: Counter architecture, no FORGE integration needed
+7. Specification: Generate workflow/specs/pending/forge_util_debouncer.md
+
+MY ANSWERS (for speed):
+-----------------------
+- Component: forge_util_debouncer (utilities category)
+- Clock: 125 MHz system clock
+- Stable time: Configurable via generic, default 1ms = 125,000 cycles
+- Interface:
+  * Inputs: clk, rst_n, noisy_in (std_logic)
+  * Outputs: clean_out (std_logic)
+  * Generics: STABLE_CYCLES (natural, default 125000)
+- Behavior:
+  * Count consecutive cycles where noisy_in is stable
+  * Change clean_out only after STABLE_CYCLES of same value
+  * Reset counter if noisy_in changes before reaching STABLE_CYCLES
+- FSM States (as std_logic_vector):
+  * "00" STABLE_LOW - output '0', input stable at '0'
+  * "01" COUNTING_HIGH - counting cycles, input at '1'
+  * "10" STABLE_HIGH - output '1', input stable at '1'
+  * "11" COUNTING_LOW - counting cycles, input at '0'
+- P1 Tests (3 essential):
+  * Reset: All outputs = '0', state = STABLE_LOW
+  * Bounce filtering: Apply 1-0-1-0-1 within STABLE_CYCLES → output stays '0'
+  * Stable detection: Hold '1' for STABLE_CYCLES+1 → output becomes '1'
+- Standards: VHDL-2008, std_logic_vector for states, rst_n active-low
+
+EXPECTED WORKFLOW:
+------------------
+After you gather requirements and generate the specification:
+
+1. You'll show me a specification summary
+2. Ask: "Should I proceed with the 3-agent automated workflow?"
+3. If I approve, you'll sequentially invoke:
+
+   Agent 1: forge-vhdl-component-generator
+   → Generates: vhdl/components/utilities/forge_util_debouncer.vhd
+   → Output: Complete VHDL entity + architecture
+
+   Agent 2: cocotb-progressive-test-designer
+   → Analyzes: Generated VHDL file
+   → Output: Test architecture, P1/P2 test strategy, expected values
+
+   Agent 3: cocotb-progressive-test-runner
+   → Implements: CocoTB test suite
+   → Runs: Tests via GHDL simulation
+   → Output: Test results (3/3 PASS expected)
+
+4. You'll commit the specification and generated files
+
+SUCCESS CRITERIA:
+-----------------
+✅ Specification file created with all 7 phases documented
+✅ VHDL file generated (entity + architecture, ~80-120 lines)
+✅ Test suite created (P1 tests: reset, bounce filter, stable detect)
+✅ Tests execute and PASS (if GHDL installed)
+✅ All standards validated (no enums, std_logic_vector states, etc.)
+
+READY?
+------
+Let's start! Begin by asking me Phase 1 questions (Component Identification).
+
+Note: I've provided most answers above to speed up the demo, but feel free
+to ask clarifying questions or suggest improvements to the design!
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ Repository: https://github.com/vmars-20/forge-vhdl-3v3-vmars          ║
+║ System Prompt: .claude/system_prompts/interactive_session_default.md    ║
+║ Requirements Guide: workflow/INTERACTIVE_REQUIREMENTS.md                 ║
+╚══════════════════════════════════════════════════════════════════════════╝

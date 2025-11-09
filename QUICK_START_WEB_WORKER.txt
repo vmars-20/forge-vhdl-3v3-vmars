@@ -1,0 +1,122 @@
+═══════════════════════════════════════════════════════════════════════════
+FORGE-VHDL WEB WORKER ONBOARDING - COPY-PASTE THIS ENTIRE MESSAGE
+═══════════════════════════════════════════════════════════════════════════
+
+Hi! I'm onboarding to the forge-vhdl repository. Please help me validate the environment and run some tests.
+
+PHASE 1: ENVIRONMENT SETUP
+--------------------------
+1. Read llms.txt to understand the project
+2. Check if scripts/cloud_setup_with_ghdl.py exists
+3. If it exists, run: uv run python scripts/cloud_setup_with_ghdl.py
+4. Create a file called environment_setup_status.txt documenting:
+   - Whether setup script ran successfully
+   - GHDL version (run: ghdl --version)
+   - Python version
+   - Any errors encountered
+5. Commit with this message format:
+
+   web-worker: Environment setup validation completed
+
+   Setup script: scripts/cloud_setup_with_ghdl.py
+   GHDL version: [insert version]
+   Status: [SUCCESS/PARTIAL/FAILED]
+   Issues: [list any problems]
+
+   🤖 Web Worker Session - Phase 1
+   Co-Authored-By: Claude <noreply@anthropic.com>
+
+6. Push the commit
+
+DIAGNOSTIC HELP FOR PHASE 1:
+- If "uv command not found": Install UV first
+- If GHDL not found: Check setup script output for errors
+- If permission denied: May need sudo for system packages
+
+PHASE 2: TEST VALIDATION
+-------------------------
+1. List available tests: uv run python cocotb_tests/run.py --list
+2. Run these P1 tests (should be <20 lines output each):
+   - uv run python cocotb_tests/run.py forge_util_clk_divider
+   - uv run python cocotb_tests/run.py forge_voltage_3v3_pkg
+   - uv run python cocotb_tests/run.py forge_voltage_5v0_pkg
+3. Create test_execution_results.txt documenting results
+4. Commit with this message format:
+
+   web-worker: Test validation completed
+
+   Tests executed:
+   - forge_util_clk_divider: [PASS/FAIL]
+   - forge_voltage_3v3_pkg: [PASS/FAIL]
+   - forge_voltage_5v0_pkg: [PASS/FAIL]
+
+   Total output lines: [should be <60]
+   Issues: [list any problems]
+
+   🤖 Web Worker Session - Phase 2
+   Co-Authored-By: Claude <noreply@anthropic.com>
+
+5. Push the commit
+
+DIAGNOSTIC HELP FOR PHASE 2:
+- If ModuleNotFoundError: Run "uv sync" to install dependencies
+- If GHDL elaboration failed: Check GHDL output for VHDL errors
+- If 287 lines of warnings: GHDL filter may not be working
+- If test timeout: Normal in cloud, GHDL simulation is CPU-intensive
+
+PHASE 3: INTERACTIVE REQUIREMENTS GATHERING (if tests pass)
+-----------------------------------------------------------
+NOTE: Slash commands (/gather-requirements) don't work in Claude Code Web.
+Use conversational requirements gathering instead.
+
+1. Read the interactive requirements guide:
+   workflow/INTERACTIVE_REQUIREMENTS.md
+
+2. Read an example specification to understand the format:
+   workflow/specs/pending/edge_detector.md
+
+3. If you want to create a new component:
+   - Tell me: "I want to create a new VHDL component"
+   - I'll guide you through 7 phases of requirements gathering
+   - We'll create a complete specification file together
+   - Then optionally run the automated 3-agent workflow
+
+4. Example: "I need a PWM generator component"
+   → I'll ask you questions about interface, behavior, testing
+   → We'll create: workflow/specs/pending/forge_util_pwm.md
+   → Then invoke agents to generate VHDL + tests
+
+5. If you create a spec, commit it with:
+
+   web-worker: Requirements gathering completed
+
+   Component: [name]
+   Specification: workflow/specs/pending/[filename].md
+   Method: Interactive conversational gathering (7 phases)
+
+   🤖 Web Worker Session - Phase 3
+   Co-Authored-By: Claude <noreply@anthropic.com>
+
+SUCCESS CRITERIA:
+-----------------
+✅ Minimum: Setup completes, GHDL works, 1 test passes
+✅ Good: 3+ tests pass, <60 lines total output
+✅ Excellent: All tests pass, requirements gathering works
+
+TROUBLESHOOTING RESOURCES:
+--------------------------
+If stuck, read these in order:
+1. CLAUDE.md - Section "Quick Start: Cloud Setup"
+2. docs/CLOUD_SETUP_PROMPT.md
+3. docs/COCOTB_TROUBLESHOOTING.md
+
+IMPORTANT NOTES:
+----------------
+- All commits should use the message format above
+- Push after each phase completes
+- Document failures too - they help improve the setup
+- Not everything may work on first try - that's expected!
+
+Ready? Let's start with Phase 1!
+
+═══════════════════════════════════════════════════════════════════════════
