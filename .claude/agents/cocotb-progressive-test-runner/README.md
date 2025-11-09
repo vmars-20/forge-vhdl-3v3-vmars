@@ -38,6 +38,19 @@ Implement and execute CocoTB tests for forge-vhdl components (utilities, package
 - Virtual environment managed in `.venv/`
 - All dependencies specified in `pyproject.toml`
 
+**CRITICAL - First-Time Setup:**
+```bash
+# ALWAYS use the setup script for initial setup
+./scripts/setup.sh
+
+# DO NOT run 'uv sync' alone - it won't install workspace members!
+```
+
+**Why?** The workspace contains 3 Python packages (forge_cocotb, forge_platform, forge_tools)
+that must be installed in editable mode. The setup script does this automatically.
+Running `uv sync` alone will install dependencies but NOT the workspace packages,
+causing `ModuleNotFoundError: No module named 'forge_cocotb'`.
+
 **Git Strategy:**
 - Commit after each test implementation, bug fix, or milestone
 - Use descriptive commit messages

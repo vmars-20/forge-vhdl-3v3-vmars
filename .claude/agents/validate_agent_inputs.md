@@ -327,8 +327,12 @@ Possible causes:
 Recommended action:
 1. If test architecture incomplete: Re-run Agent 2
 2. If GHDL missing: Run scripts/cloud_setup_with_ghdl.py
-3. If Python packages missing: Run uv sync
+3. If Python packages missing: Run ./scripts/setup.sh (NOT 'uv sync' alone!)
 4. Re-run validation
+
+**IMPORTANT:** Always use ./scripts/setup.sh for setup, not 'uv sync' alone.
+The setup script installs workspace members (forge_cocotb, forge_platform, forge_tools)
+in editable mode, which 'uv sync' does not do automatically.
 ```
 
 **If Validation Passes:**
