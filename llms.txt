@@ -8,6 +8,7 @@
 **Where:** Works in Claude Code Web, GitHub Codespaces, local environments
 **Cloud Setup:** One command: `uv run python scripts/cloud_setup_with_ghdl.py`
 **Test:** CocoTB + GHDL filter (P1 tests <20 lines, 98% noise reduction)
+**Workflow:** Hybrid recommended - Requirements locally → Agents in cloud → Integrate locally
 
 ## Structure
 
@@ -136,12 +137,28 @@ docs/               # Testing standards, guides, patterns
 ### Quick Start Pattern
 
 **For brand new components (DEFAULT - Students/Beginners):**
+
+**🔄 HYBRID WORKFLOW (RECOMMENDED for Local CLI users):**
+1. **Local:** Run `/forge-start` → Choose Student (AI-First) workflow
+2. **Local:** Answer 2-3 questions → Spec generated in `workflow/specs/pending/`
+3. **Local:** Commit spec: `git add workflow/specs/pending/ && git commit && git push`
+4. **Cloud:** Open Claude Web → Attach repository → Say: "Read workflow/specs/pending/[component].md and execute 3-agent workflow"
+5. **Cloud:** Agents run autonomously (VHDL generation → Test design → Test execution with incremental commits)
+6. **Local:** Pull results: `git pull`
+7. **Local:** Integrate: `mv workflow/artifacts/vhdl/[component].vhd vhdl/components/[category]/`
+
+**Why hybrid?**
+- Local CLI: Fast interactive requirements (output settings control)
+- Claude Web: Unlimited agent execution (no token limits, auto GHDL setup, incremental commits)
+- Local CLI: Final review and integration (familiar tooling)
+
+**Cloud-only workflow (Claude Web or Codespaces):**
 1. **AI-First requirements** - Ask Claude: "I need a [component description]. Use the AI-First requirements workflow."
-3. **Spec proposed** - Claude proposes complete spec after 2-3 critical questions
-4. **Review/refine** - Approve or refine defaults
-5. **Automated workflow** - Run 3-agent workflow on spec → Generates VHDL + tests
-6. **Review artifacts** - Check `workflow/artifacts/vhdl/` and `workflow/artifacts/tests/`
-7. **Integrate** - Move to main codebase when satisfied
+2. **Spec proposed** - Claude proposes complete spec after 2-3 critical questions
+3. **Review/refine** - Approve or refine defaults
+4. **Automated workflow** - Run 3-agent workflow on spec → Generates VHDL + tests
+5. **Review artifacts** - Check `workflow/artifacts/vhdl/` and `workflow/artifacts/tests/`
+6. **Integrate** - Move to main codebase when satisfied
 
 **For complex/novel components (Engineers):**
 1. **Engineer requirements** - Ask Claude: "I want to create a new VHDL component. Please read workflow/ENGINEER_REQUIREMENTS.md and guide me through the requirements process."
@@ -151,12 +168,13 @@ docs/               # Testing standards, guides, patterns
 5. **Integrate** - Move to main codebase when satisfied
 
 **Using reference patterns (fast learning):**
-- 5 gold-standard specs in `workflow/specs/reference/`:
+- 6 gold-standard specs in `workflow/specs/reference/`:
   - `edge_detector.md` - Simple utility (registered comparison)
   - `synchronizer.md` - CDC metastability mitigation (multi-stage registers)
   - `pwm_generator.md` - Counter-based pattern
   - `debouncer.md` - FSM pattern with timing
   - `pulse_stretcher.md` - Retriggerable timing pattern
+  - `forge_util_edge_detector.md` - AI-First workflow example output ← NEW
 - Browse these to understand spec format and quality standards
 - Run workflow: "Read workflow/specs/reference/edge_detector.md and execute the complete 3-agent workflow"
 
