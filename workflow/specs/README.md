@@ -6,6 +6,23 @@
 
 ---
 
+## Directory Structure (3-Tier System)
+
+```
+workflow/specs/
+├── reference/     # Gold-standard pattern library (5 specs, read-only)
+├── pending/       # Active work queue (user specs awaiting implementation)
+├── completed/     # Implementation archive (specs for completed components)
+└── README.md      # This file
+```
+
+**Quick navigation:**
+- **Browse patterns?** → `reference/README.md` (edge detector, synchronizer, PWM, debouncer, pulse stretcher)
+- **Create new spec?** → `pending/README.md` (interactive gathering or manual authoring)
+- **Archive completed work?** → `completed/README.md` (move specs after implementation)
+
+---
+
 ## Spec Template
 
 Save as `specs/pending/your_component.md`:
@@ -131,9 +148,37 @@ For this component, use these test values:
 
 ---
 
-## Real Example
+## Specification Lifecycle
 
-See `specs/examples/pwm_generator.md` for complete reference.
+```
+reference/  → Browse for patterns (gold-standard examples)
+     ↓
+  (user creates new spec based on pattern)
+     ↓
+pending/    → Active work queue (spec ready for implementation)
+     ↓
+  (agents 1-3: generate VHDL + tests → workflow/artifacts/)
+     ↓
+  (user reviews artifacts/, integrates to main codebase)
+     ↓
+completed/  → Archive (historical record)
+```
+
+**Directory purposes:**
+- **reference/** - Never deleted, always in git, quality benchmarks
+- **pending/** - Transient work queue, gets cleared as implemented
+- **completed/** - Historical archive, shows what was built
+
+---
+
+## Real Examples
+
+See `reference/` directory for 5 gold-standard specifications:
+- `reference/edge_detector.md` - Simple utility pattern
+- `reference/synchronizer.md` - CDC pattern
+- `reference/pwm_generator.md` - Counter-based pattern
+- `reference/debouncer.md` - FSM pattern
+- `reference/pulse_stretcher.md` - Retriggerable timing pattern
 
 ---
 

@@ -98,7 +98,7 @@ uv run python cocotb_tests/run.py --list
 #### Development Workflow
 
 ```
-Requirements Gathering (/gather-requirements)
+Requirements Gathering (Interactive Conversational)
    ↓ (Complete specification document)
 0. forge-new-component (OPTIONAL)
    ↓ (Placeholder .md files with specifications)
@@ -113,20 +113,21 @@ Requirements Gathering (/gather-requirements)
 
 **Each agent knows its neighbors and handoff patterns:**
 
-**Requirements Gathering: /gather-requirements** (`.claude/commands/gather-requirements.md`) ⭐ NEW!
-- **Role:** Interactive requirements elicitation via structured Q&A
+**Requirements Gathering: Interactive Conversational** (`workflow/INTERACTIVE_REQUIREMENTS.md`) ⭐ NEW!
+- **Role:** Interactive requirements elicitation via structured Q&A (conversational, not slash command)
 - **Modes:** 7-phase interview (identification → functionality → interface → behavior → testing → design → generation)
 - **Scope:** Pre-planning (before any implementation)
 - **Outputs:** Complete specification in `workflow/specs/pending/[component].md`
 - **Features:** Standards validation, guided questions, educational feedback
-- **Handoff to:** Automated 4-agent workflow OR manual implementation
-- **Usage:** `/gather-requirements` - Start here for ALL new components!
+- **Handoff to:** Automated 3-agent workflow OR manual implementation
+- **Usage:** "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
+- **Note:** Slash commands don't work in Claude Code Web - use conversational approach
 
 **Step 0: New Component Planner** (`.claude/agents/forge-new-component/agent.md`)
 - **Role:** File structure scaffolding from specifications
 - **Modes:** Placeholder generation from existing specs
 - **Scope:** Project planning (converts specs to placeholders)
-- **Inputs:** Specification documents (from /gather-requirements or manual)
+- **Inputs:** Specification documents (from interactive requirements gathering or manual authoring)
 - **Outputs:** Markdown placeholder files (.vhd.md, .py.md) with detailed specs
 - **Handoff to:** forge-vhdl-component-generator + cocotb-progressive-test-designer (parallel)
 - **Usage:** OPTIONAL - Use when you want placeholder-driven workflow instead of direct implementation.
@@ -166,9 +167,9 @@ Requirements Gathering (/gather-requirements)
 
 **Pattern 1: New Component (Recommended - Start with Requirements Gathering)**
 ```
-User: Types "/gather-requirements"
+User: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
   ↓
-Requirements Gathering (Interactive Q&A)
+Requirements Gathering (Interactive Conversational Q&A)
   - Phase 1: Component identification
   - Phase 2: Functionality deep dive
   - Phase 3: Interface specification
@@ -189,19 +190,22 @@ Agents 1-3: Execute in sequence
 User: Reviews artifacts, moves to main codebase
 ```
 
-**Pattern 2: Using Example Specs (Fast Start)**
+**Pattern 2: Using Reference Specs (Fast Start - Learn from Patterns)**
 ```
-User: Browses workflow/specs/pending/ directory
-  - edge_detector.md (ready to use)
-  - synchronizer.md (ready to use)
-  - debouncer.md (ready to use)
-  - pulse_stretcher.md (ready to use)
+User: Browses workflow/specs/reference/ directory
+  - edge_detector.md (simple utility pattern)
+  - synchronizer.md (CDC pattern)
+  - pwm_generator.md (counter-based pattern)
+  - debouncer.md (FSM pattern with timing)
+  - pulse_stretcher.md (retriggerable timing pattern)
   ↓
-User: "Read workflow/specs/pending/edge_detector.md and execute the complete 4-agent workflow"
+User: "Read workflow/specs/reference/edge_detector.md and execute the complete 3-agent workflow"
   ↓
 Agents 1-3: Generate VHDL + tests automatically
   ↓
 User: Reviews and integrates
+
+Note: Reference specs are gold-standard examples for learning patterns.
 ```
 
 **Pattern 3: Direct Implementation (Requirements Crystal Clear)**
@@ -218,22 +222,110 @@ Agent 3: cocotb-progressive-test-runner
   - Implements and runs tests
 ```
 
-**When to use /gather-requirements:**
+**When to use interactive requirements gathering:**
 - ✅ ALL new components (recommended as default)
 - ✅ Requirements are unclear or incomplete
 - ✅ Want structured, validated specification
 - ✅ Learning VHDL-FORGE standards and patterns
 - ✅ Need educational guidance through design process
+- ✅ Ask: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me."
 
-**When to use example specs:**
-- ✅ Similar component already specified (edge detector, synchronizer, etc.)
+**When to use reference specs:**
+- ✅ Learning spec format and quality standards
+- ✅ Similar component already exists (edge detector, synchronizer, PWM, debouncer, pulse stretcher)
 - ✅ Want to see complete specification examples
 - ✅ Fast prototyping with proven patterns
+- ✅ Browse: `workflow/specs/reference/` for gold-standard examples
 
 **When to skip requirements gathering:**
 - ❌ Requirements already documented in detail
 - ❌ Trivial, single-purpose utility
 - ❌ Exact copy of existing component with minor changes
+
+---
+
+## Reference Specification Library
+
+### Purpose
+
+The `workflow/specs/reference/` directory contains 5 gold-standard specifications that serve as:
+- **Learning examples** for human developers
+- **Pattern templates** for AI agents
+- **Quality benchmarks** for all new specifications
+
+### Available Patterns
+
+**1. edge_detector.md - Simple Utility Pattern**
+- **Complexity:** Low
+- **Pattern:** Registered comparison (2 flip-flops + combinational logic)
+- **Use for:** Signal transitions, event detection, trigger detection
+- **Key features:** Single-cycle pulse output, configurable edge types (rising/falling/both)
+
+**2. synchronizer.md - CDC (Clock Domain Crossing) Pattern**
+- **Complexity:** Low-Medium
+- **Pattern:** Multi-stage register chain for metastability mitigation
+- **Use for:** Crossing clock domains, external async signals
+- **Key features:** Configurable stages (default 2), metastability-safe design
+
+**3. pwm_generator.md - Counter-Based Pattern**
+- **Complexity:** Medium
+- **Pattern:** Free-running counter with threshold comparison
+- **Use for:** Periodic signal generation, DAC control, motor drivers
+- **Key features:** Configurable frequency/duty cycle, 8-bit resolution
+
+**4. debouncer.md - FSM Pattern with Timing**
+- **Complexity:** Medium
+- **Pattern:** 4-state FSM with stability counter
+- **Use for:** Button inputs, mechanical switch noise filtering
+- **Key features:** std_logic_vector state encoding, time-based transitions
+- **Critical:** Shows correct FSM design (NO enums, explicit state encoding)
+
+**5. pulse_stretcher.md - Retriggerable Timing Pattern**
+- **Complexity:** Medium
+- **Pattern:** Retriggerable one-shot timer (down-counter with load)
+- **Use for:** Extending short pulses, timeout generation, watchdog timers
+- **Key features:** Retriggerable, configurable duration, time/cycle modes
+
+### Using Reference Specs
+
+**For Human Developers:**
+1. Browse `workflow/specs/reference/` to find similar pattern
+2. Study the spec structure (all 7 sections complete)
+3. Use as template for your new component
+4. Follow same detail level and formatting
+
+**For AI Agents:**
+When designing a new component:
+1. Read matching reference spec for architectural guidance
+2. Adapt pattern to new requirements
+3. Follow same structure (sections, port order, test levels)
+4. Preserve best practices (std_logic_vector states, reset hierarchy, etc.)
+
+**Pattern Matching Guide:**
+```
+Your component needs:        Use reference spec:
+─────────────────────        ───────────────────
+Edge/event detection      →  edge_detector.md
+Clock domain crossing     →  synchronizer.md
+Periodic signal output    →  pwm_generator.md
+Button/switch input       →  debouncer.md
+Pulse timing/extension    →  pulse_stretcher.md
+Counter-based logic       →  pwm_generator.md or pulse_stretcher.md
+FSM-based control         →  debouncer.md
+```
+
+### Quality Standards
+
+All reference specs include:
+- ✅ Complete 7-section structure
+- ✅ Exact port specifications (names, types, widths)
+- ✅ std_logic_vector state encodings (NOT enums)
+- ✅ Reset behavior documented
+- ✅ P1 tests specified (3-5 tests, <20 line output goal)
+- ✅ Concrete test values (not ranges or "TBD")
+- ✅ Design rationale and constraints
+
+These are **permanent** reference materials - never deleted, only improved.
 
 ---
 
@@ -892,8 +984,8 @@ Cost per test: $0.001 (GPT-4)
 ### Adding New Component (Recommended Workflow)
 
 **Step 1: Requirements Gathering**
-1. Type `/gather-requirements` in Claude Code
-2. Answer 7-phase Q&A session
+1. Ask Claude: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
+2. Answer 7-phase Q&A session (30 questions)
 3. Review generated spec in `workflow/specs/pending/[component].md`
 4. Edit/refine if needed
 

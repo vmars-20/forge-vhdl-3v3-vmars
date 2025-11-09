@@ -87,12 +87,13 @@ docs/               # Testing standards, guides, patterns
 
 **Requirements Gathering** → **0. New Component Planner** → **1. Component Generator** → **2. Test Designer** → **3. Test Runner**
 
-**Slash Command: /gather-requirements** (`.claude/commands/gather-requirements.md`) ⭐ NEW!
-- **Purpose:** Interactive requirements gathering session
+**Interactive Requirements Gathering** (`workflow/INTERACTIVE_REQUIREMENTS.md`) ⭐
+- **Purpose:** Conversational requirements gathering through 7-phase Q&A
 - **Output:** Complete component specification in `workflow/specs/pending/`
-- **Process:** 7-phase Q&A (identification, functionality, interface, behavior, testing, design, generation)
+- **Process:** 30 questions across 7 phases (identification, functionality, interface, behavior, testing, design, generation)
 - **Features:** Standards validation, guided questions, educational
-- **Usage:** Start here for new components! Creates detailed spec before implementation.
+- **Usage:** "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
+- **Note:** Slash commands don't work in Claude Code Web - use conversational approach instead.
 
 **Step 0: forge-new-component** (`.claude/agents/forge-new-component/agent.md`)
 - **Purpose:** File structure scaffolding from specifications
@@ -125,18 +126,21 @@ docs/               # Testing standards, guides, patterns
 ### Quick Start Pattern
 
 **For brand new components (recommended):**
-1. `/gather-requirements` - Interactive Q&A → Creates `workflow/specs/pending/component.md`
-2. **Automated workflow** - Run 4-agent workflow on spec → Generates VHDL + tests
-3. **Review artifacts** - Check `workflow/artifacts/vhdl/` and `workflow/artifacts/tests/`
-4. **Integrate** - Move to main codebase when satisfied
+1. **Interactive requirements** - Ask Claude: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
+2. **Spec created** - Claude generates `workflow/specs/pending/component.md` after 7-phase Q&A
+3. **Automated workflow** - Run 3-agent workflow on spec → Generates VHDL + tests
+4. **Review artifacts** - Check `workflow/artifacts/vhdl/` and `workflow/artifacts/tests/`
+5. **Integrate** - Move to main codebase when satisfied
 
-**Using example specs (fast):**
-- 4 ready-to-use specs in `workflow/specs/pending/`:
-  - `edge_detector.md` - Edge detection utility
-  - `synchronizer.md` - CDC metastability mitigation
-  - `debouncer.md` - Button debouncing
-  - `pulse_stretcher.md` - Pulse width extension
-- Run: "Read workflow/specs/pending/edge_detector.md and execute the complete 4-agent workflow"
+**Using reference patterns (fast learning):**
+- 5 gold-standard specs in `workflow/specs/reference/`:
+  - `edge_detector.md` - Simple utility (registered comparison)
+  - `synchronizer.md` - CDC metastability mitigation (multi-stage registers)
+  - `pwm_generator.md` - Counter-based pattern
+  - `debouncer.md` - FSM pattern with timing
+  - `pulse_stretcher.md` - Retriggerable timing pattern
+- Browse these to understand spec format and quality standards
+- Run workflow: "Read workflow/specs/reference/edge_detector.md and execute the complete 3-agent workflow"
 
 **For direct implementation (requirements crystal clear):**
 1. **forge-vhdl-component-generator** - Direct spec → Creates .vhd
@@ -274,10 +278,12 @@ pytest python_tests/test_hierarchical_decoder.py
 - `scripts/GHDL_FILTER.md` - Filter implementation details
 
 **Workflow Documentation:**
-- `workflow/specs/README.md` - Specification writing guide
+- `workflow/specs/README.md` - Specification writing guide (3-tier structure)
+- `workflow/specs/reference/README.md` - Gold-standard pattern library (5 specs)
+- `workflow/specs/pending/README.md` - Active work queue
+- `workflow/specs/completed/README.md` - Implementation archive
+- `workflow/INTERACTIVE_REQUIREMENTS.md` - Conversational requirements gathering guide
 - `workflow/README.md` - Complete workflow guide
-- `.claude/commands/README.md` - Slash commands reference
-- `REQUIREMENTS_WORKFLOW_SUMMARY.md` - Requirements gathering system overview
 
 **Navigation pattern:**
 - Quick question? → Read llms.txt (this file)

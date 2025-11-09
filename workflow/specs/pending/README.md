@@ -1,51 +1,77 @@
 # Pending Component Specifications
 
-This directory contains component specifications ready for the automated agent workflow.
+**Purpose:** Active work queue for specifications waiting to be implemented
+
+**Status:** Ready for automated agent workflow (Agents 1-3)
+
+---
+
+## What Goes Here?
+
+User-created specifications that are ready to be implemented:
+
+✅ Created via `/gather-requirements` interactive session
+✅ Manually written following `workflow/specs/README.md` template
+✅ Complete and validated (ready for agents to read)
+❌ NOT reference specs (those go in `workflow/specs/reference/`)
+❌ NOT implemented components (those go in `workflow/specs/completed/`)
+
+---
 
 ## Current Specifications
 
-### ✅ Ready for Implementation
+### ✅ Ready for Implementation (Moved to Reference)
 
-1. **edge_detector.md** - Edge detection utility
-   - Category: utilities
-   - Complexity: Low
-   - Test Level: P1 (4 tests)
-   - Features: Rising/falling edge detection with configurable modes
+**NOTE:** The original 4 example specs have been promoted to `workflow/specs/reference/` as gold-standard patterns:
 
-2. **synchronizer.md** - Two-stage synchronizer
-   - Category: utilities
-   - Complexity: Low-Medium
-   - Test Level: P1 (4 tests)
-   - Features: CDC metastability mitigation, configurable stages
+1. **edge_detector.md** → NOW IN `reference/` (simple utility pattern)
+2. **synchronizer.md** → NOW IN `reference/` (CDC pattern)
+3. **debouncer.md** → NOW IN `reference/` (FSM pattern)
+4. **pulse_stretcher.md** → NOW IN `reference/` (retriggerable timing pattern)
 
-3. **debouncer.md** - Button debouncer
-   - Category: utilities
-   - Complexity: Medium
-   - Test Level: P1 (4 tests)
-   - Features: Configurable debounce time, multiple output modes
+**These specs remain in pending/ for backward compatibility but should be deleted after confirming reference/ copies.**
 
-4. **pulse_stretcher.md** - Pulse width extender
-   - Category: utilities
-   - Complexity: Medium
-   - Test Level: P1 (5 tests)
-   - Features: Retriggerable stretching, time/cycle modes
+---
 
-## How to Use These Specs
+## How to Add New Specifications
 
-### Option 1: Full Automated Workflow
+### Method 1: Interactive Gathering (Recommended)
 
-```bash
-# Pick a spec and run the complete 4-agent workflow
-# Example for edge_detector:
+**Start conversational requirements gathering with Claude:**
 ```
+"I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the 7-phase requirements gathering process."
+```
+
+This conversational approach:
+- Walks through 7-phase Q&A session (30 questions)
+- Validates answers against VHDL-FORGE standards
+- Generates complete specification
+- Saves to `workflow/specs/pending/[component].md`
+
+**Note:** Slash commands like `/gather-requirements` don't work in Claude Code Web. Use conversational approach instead.
+
+### Method 2: Manual Authoring
+
+1. Browse `workflow/specs/reference/` for pattern examples
+2. Copy template from `workflow/specs/README.md`
+3. Write specification following the structure
+4. Save to `workflow/specs/pending/[component].md`
+
+---
+
+## How to Implement Specifications
+
+### Option 1: Full Automated Workflow (Recommended)
 
 **In Claude Code:**
 ```
-Read workflow/specs/pending/edge_detector.md and execute the complete 4-agent workflow:
-1. Generate VHDL component
-2. Design test architecture
-3. Implement and run CocoTB tests
+Read workflow/specs/pending/[component].md and execute the complete 3-agent workflow:
+1. Generate VHDL component (Agent 1: forge-vhdl-component-generator)
+2. Design test architecture (Agent 2: cocotb-progressive-test-designer)
+3. Implement and run CocoTB tests (Agent 3: cocotb-progressive-test-runner)
 ```
+
+**Agents run autonomously**, generating files in `workflow/artifacts/`
 
 ### Option 2: Manual Implementation
 
@@ -95,13 +121,23 @@ This launches an interactive session that:
 ## Specification Lifecycle
 
 ```
-pending/          → Implementation → completed/
-├── component.md      (agents 1-3)     ├── component.md
+reference/  → Read for patterns (gold-standard library)
+     ↓
+  (user creates new spec, saves to pending/)
+     ↓
+pending/    → Active work queue (YOU ARE HERE)
+     ↓
+  (agents 1-3 generate VHDL + tests → artifacts/)
+     ↓
+  (user reviews artifacts/, integrates to codebase)
+     ↓
+completed/  → Archive (implementation done)
 ```
 
-**States:**
-- **pending/** - Ready for implementation
-- **completed/** - Implemented and tested (archive for reference)
+**Directory purposes:**
+- **reference/** - Gold-standard patterns (never deleted, always in git)
+- **pending/** - Work queue (user specs awaiting implementation)
+- **completed/** - Historical archive (implementation done, moved to codebase)
 
 ## Next Steps After Implementation
 
