@@ -54,6 +54,16 @@ TESTS_CONFIG = {
         category="utilities",
     ),
 
+    "forge_util_majority_voter": TestConfig(
+        name="forge_util_majority_voter",
+        sources=[
+            VHDL_UTIL / "forge_util_majority_voter.vhd",
+        ],
+        toplevel="forge_util_majority_voter",
+        test_module="components.test_forge_util_majority_voter_progressive",
+        category="utilities",
+    ),
+
     # === Packages ===
 
     "forge_lut_pkg": TestConfig(
