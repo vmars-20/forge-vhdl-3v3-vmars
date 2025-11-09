@@ -30,7 +30,7 @@
 - Educational goal (learn VHDL-FORGE standards step-by-step)
 - Requirements are vague or contradictory
 
-**Reference:** `workflow/INTERACTIVE_REQUIREMENTS.md` for full 30-question approach
+**Reference:** `workflow/ENGINEER_REQUIREMENTS.md` for full 30-question approach
 
 ---
 
@@ -836,7 +836,7 @@ Before generating final spec, Claude internally validates:
 
 ```
 workflow/
-├── INTERACTIVE_REQUIREMENTS.md   # 30-question full guidance (learning mode)
+├── ENGINEER_REQUIREMENTS.md      # 30-question full guidance (engineer mode)
 ├── AI_FIRST_REQUIREMENTS.md      # This file (fast mode)
 └── README.md                      # Explains when to use each
 
@@ -930,7 +930,7 @@ User reviews artifacts, integrates to main codebase
 
 ## See Also
 
-- **`workflow/INTERACTIVE_REQUIREMENTS.md`** - Full 30-question guided approach
+- **`workflow/ENGINEER_REQUIREMENTS.md`** - Full 30-question guided approach
 - **`workflow/specs/reference/`** - 5 gold-standard pattern specs
 - **`workflow/specs/reference/README.md`** - Pattern matching guide
 - **`CLAUDE.md`** - VHDL-FORGE coding standards and testing patterns
@@ -940,4 +940,4 @@ User reviews artifacts, integrates to main codebase
 
 **Last Updated:** 2025-11-09
 **Version:** 1.0.0
-**Complements:** INTERACTIVE_REQUIREMENTS.md (full guided approach)
+**Complements:** ENGINEER_REQUIREMENTS.md (full guided approach for engineers)

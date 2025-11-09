@@ -21,15 +21,18 @@ cp specs/examples/pwm_generator.md specs/pending/my_component.md
 
 **Or** use one of two requirements gathering workflows (recommended):
 
-**Option A: AI-First Workflow (Fast - 2-5 minutes)**
-- For clear requirements and pattern-matched components
-- Claude infers defaults, proposes complete spec
+**DEFAULT: AI-First Workflow (Students/Beginners - 2-5 minutes)**
+- For students, beginners, clear requirements, pattern-matched components
+- Claude infers defaults, proposes complete spec with 2-3 critical questions
+- Fast iteration and prototyping
+- **Output Style Tip:** Use `/output-style learning` for collaborative, educational experience
 - See `AI_FIRST_REQUIREMENTS.md`
 
-**Option B: Interactive Workflow (Thorough - 15-30 minutes)**
-- For learning or novel architectures
-- 30 guided questions across 7 phases
-- See `INTERACTIVE_REQUIREMENTS.md`
+**ALTERNATIVE: Engineer Workflow (Detailed Control - 15-30 minutes)**
+- For engineers, novel architectures, complex systems
+- 30 guided questions across 7 phases for full technical control
+- Learning VHDL-FORGE standards in depth
+- See `ENGINEER_REQUIREMENTS.md`
 
 ---
 
@@ -261,10 +264,23 @@ Then reference it: `"Follow workflow/prompts/my-custom-workflow.md"`
 
 ## See Also
 
-- `AI_FIRST_REQUIREMENTS.md` - Fast requirements workflow (2-5 min)
-- `INTERACTIVE_REQUIREMENTS.md` - Guided requirements workflow (15-30 min)
+- `AI_FIRST_REQUIREMENTS.md` - **DEFAULT** rapid requirements workflow (2-5 min, students/beginners)
+- `ENGINEER_REQUIREMENTS.md` - Detailed requirements workflow (15-30 min, engineers)
 - `.claude/README.md` - Agent workflow details
 - `CLAUDE.md` - Testing standards, VHDL coding rules
 - `SPEC.md` - System setup (GHDL, uv, containers)
 - `specs/README.md` - Spec writing guide
 - `specs/reference/README.md` - Gold-standard pattern library
+
+## Output Styles (Claude Code Feature)
+
+**For Students:** Use `/output-style learning` to enable collaborative, educational mode:
+- Claude explains reasoning while working
+- Adds TODO(human) markers for student contribution
+- Interactive pair-programming experience
+- Perfect complement to AI-First workflow
+
+**Other Options:**
+- `/output-style` - View all available styles
+- `/output-style explanatory` - Detailed explanations without TODOs
+- `/output-style:new I want...` - Create custom style

@@ -87,13 +87,24 @@ docs/               # Testing standards, guides, patterns
 
 **Requirements Gathering** → **0. New Component Planner** → **1. Component Generator** → **2. Test Designer** → **3. Test Runner**
 
-**Interactive Requirements Gathering** (`workflow/INTERACTIVE_REQUIREMENTS.md`) ⭐
-- **Purpose:** Conversational requirements gathering through 7-phase Q&A
+**AI-First Requirements** (`workflow/AI_FIRST_REQUIREMENTS.md`) ⭐ **DEFAULT for Students/Beginners**
+- **Purpose:** Rapid spec generation via pattern recognition and intelligent defaults
+- **Time:** 2-5 minutes (vs 15-30 min for Engineer workflow)
+- **Process:** Pattern matching + 2-3 critical questions only
 - **Output:** Complete component specification in `workflow/specs/pending/`
+- **Features:** Fast iteration, intelligent inference, pattern-based defaults
+- **Best for:** Students, beginners, clear requirements, pattern-matched components
+- **Usage:** "I need a [component description]. Use the AI-First requirements workflow."
+- **Tip:** Use `/output-style learning` for collaborative, educational experience
+
+**Engineer Requirements** (`workflow/ENGINEER_REQUIREMENTS.md`) - For Detailed Technical Control
+- **Purpose:** Comprehensive requirements gathering through 7-phase Q&A
+- **Time:** 15-30 minutes (thorough, detailed)
 - **Process:** 30 questions across 7 phases (identification, functionality, interface, behavior, testing, design, generation)
-- **Features:** Standards validation, guided questions, educational
-- **Usage:** "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
-- **Note:** Slash commands don't work in Claude Code Web - use conversational approach instead.
+- **Output:** Complete component specification in `workflow/specs/pending/`
+- **Features:** Standards validation, guided questions, educational, full control
+- **Best for:** Engineers, novel architectures, complex systems, learning standards in depth
+- **Usage:** "I want to create a new VHDL component. Please read workflow/ENGINEER_REQUIREMENTS.md and guide me through the requirements process."
 
 **Step 0: forge-new-component** (`.claude/agents/forge-new-component/agent.md`)
 - **Purpose:** File structure scaffolding from specifications
@@ -125,8 +136,17 @@ docs/               # Testing standards, guides, patterns
 
 ### Quick Start Pattern
 
-**For brand new components (recommended):**
-1. **Interactive requirements** - Ask Claude: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
+**For brand new components (DEFAULT - Students/Beginners):**
+1. (Optional) Enable learning mode: `/output-style learning`
+2. **AI-First requirements** - Ask Claude: "I need a [component description]. Use the AI-First requirements workflow."
+3. **Spec proposed** - Claude proposes complete spec after 2-3 critical questions
+4. **Review/refine** - Approve or refine defaults
+5. **Automated workflow** - Run 3-agent workflow on spec → Generates VHDL + tests
+6. **Review artifacts** - Check `workflow/artifacts/vhdl/` and `workflow/artifacts/tests/`
+7. **Integrate** - Move to main codebase when satisfied
+
+**For complex/novel components (Engineers):**
+1. **Engineer requirements** - Ask Claude: "I want to create a new VHDL component. Please read workflow/ENGINEER_REQUIREMENTS.md and guide me through the requirements process."
 2. **Spec created** - Claude generates `workflow/specs/pending/component.md` after 7-phase Q&A
 3. **Automated workflow** - Run 3-agent workflow on spec → Generates VHDL + tests
 4. **Review artifacts** - Check `workflow/artifacts/vhdl/` and `workflow/artifacts/tests/`

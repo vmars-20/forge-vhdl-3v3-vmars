@@ -113,21 +113,36 @@ Requirements Gathering (Interactive Conversational)
 
 **Each agent knows its neighbors and handoff patterns:**
 
-**Requirements Gathering: Interactive Conversational** (`workflow/INTERACTIVE_REQUIREMENTS.md`) ⭐ NEW!
-- **Role:** Interactive requirements elicitation via structured Q&A (conversational, not slash command)
-- **Modes:** 7-phase interview (identification → functionality → interface → behavior → testing → design → generation)
+**Requirements Gathering: Two Complementary Workflows** ⭐
+
+**AI-First Workflow** (`workflow/AI_FIRST_REQUIREMENTS.md`) - **DEFAULT for Students/Beginners**
+- **Role:** Rapid spec generation via pattern recognition and intelligent defaults
+- **Time:** 2-5 minutes (vs 15-30 min for Engineer workflow)
+- **Questions:** 2-3 critical questions only
 - **Scope:** Pre-planning (before any implementation)
 - **Outputs:** Complete specification in `workflow/specs/pending/[component].md`
-- **Features:** Standards validation, guided questions, educational feedback
+- **Features:** Pattern matching, intelligent inference, fast iteration
+- **Best for:** Students, beginners, clear requirements, pattern-matched components
 - **Handoff to:** Automated 3-agent workflow OR manual implementation
-- **Usage:** "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
-- **Note:** Slash commands don't work in Claude Code Web - use conversational approach
+- **Usage:** "I need a [component description]. Use the AI-First requirements workflow."
+- **Tip:** Use `/output-style learning` for collaborative, educational experience
+
+**Engineer Workflow** (`workflow/ENGINEER_REQUIREMENTS.md`) - For Detailed Technical Control
+- **Role:** Comprehensive requirements elicitation via structured 30-question Q&A
+- **Time:** 15-30 minutes (thorough, detailed)
+- **Modes:** 7-phase interview (identification → functionality → interface → behavior → testing → design → generation)
+- **Scope:** Pre-planning with full technical detail
+- **Outputs:** Complete specification in `workflow/specs/pending/[component].md`
+- **Features:** Standards validation, guided questions, educational feedback, full control
+- **Best for:** Engineers, novel architectures, complex systems, learning standards in depth
+- **Handoff to:** Automated 3-agent workflow OR manual implementation
+- **Usage:** "I want to create a new VHDL component. Please read workflow/ENGINEER_REQUIREMENTS.md and guide me through the requirements process."
 
 **Step 0: New Component Planner** (`.claude/agents/forge-new-component/agent.md`)
 - **Role:** File structure scaffolding from specifications
 - **Modes:** Placeholder generation from existing specs
 - **Scope:** Project planning (converts specs to placeholders)
-- **Inputs:** Specification documents (from interactive requirements gathering or manual authoring)
+- **Inputs:** Specification documents (from AI-First or Engineer requirements workflows, or manual authoring)
 - **Outputs:** Markdown placeholder files (.vhd.md, .py.md) with detailed specs
 - **Handoff to:** forge-vhdl-component-generator + cocotb-progressive-test-designer (parallel)
 - **Usage:** OPTIONAL - Use when you want placeholder-driven workflow instead of direct implementation.
@@ -165,21 +180,19 @@ Requirements Gathering (Interactive Conversational)
 
 #### Quick Start Patterns
 
-**Pattern 1: New Component (Recommended - Start with Requirements Gathering)**
+**Pattern 1: New Component (DEFAULT - AI-First for Students/Beginners)**
 ```
-User: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
+User (optional): /output-style learning   # For collaborative, educational experience
+User: "I need a PWM generator. Use the AI-First requirements workflow."
   ↓
-Requirements Gathering (Interactive Conversational Q&A)
-  - Phase 1: Component identification
-  - Phase 2: Functionality deep dive
-  - Phase 3: Interface specification
-  - Phase 4: Behavior specification
-  - Phase 5: Testing strategy
-  - Phase 6: Design guidance
-  - Phase 7: Specification generation
+AI-First Requirements Gathering (2-5 minutes)
+  - Pattern recognition: Matches pwm_generator.md reference spec
+  - Intelligent inference: Ports, generics, tests, dependencies
+  - Critical questions: 2-3 only (frequency range? duty cycle resolution?)
+  - Proposes complete spec for review
   - Creates: workflow/specs/pending/forge_util_pwm.md
   ↓
-User: Reviews spec, then runs automated workflow
+User: Reviews spec, approves or refines defaults
   ↓
 Agents 1-3: Execute in sequence
   - Agent 1: Generates forge_util_pwm.vhd
@@ -188,6 +201,8 @@ Agents 1-3: Execute in sequence
   - Outputs: workflow/artifacts/vhdl/ and workflow/artifacts/tests/
   ↓
 User: Reviews artifacts, moves to main codebase
+
+Tip: Learning output style adds TODO(human) markers for student contribution
 ```
 
 **Pattern 2: Using Reference Specs (Fast Start - Learn from Patterns)**
@@ -222,13 +237,22 @@ Agent 3: cocotb-progressive-test-runner
   - Implements and runs tests
 ```
 
-**When to use interactive requirements gathering:**
-- ✅ ALL new components (recommended as default)
-- ✅ Requirements are unclear or incomplete
-- ✅ Want structured, validated specification
-- ✅ Learning VHDL-FORGE standards and patterns
-- ✅ Need educational guidance through design process
-- ✅ Ask: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me."
+**When to use AI-First workflow (DEFAULT):**
+- ✅ Students and beginners (recommended default)
+- ✅ Clear component description available
+- ✅ Pattern-matched components (counters, FSMs, CDC, timing, edge detection)
+- ✅ Fast iteration and prototyping
+- ✅ Want intelligent defaults with option to refine
+- ✅ Ask: "I need a [component description]. Use the AI-First requirements workflow."
+- ✅ Tip: Use `/output-style learning` for collaborative, educational experience
+
+**When to use Engineer workflow:**
+- ✅ Novel architectures (no matching pattern)
+- ✅ Complex systems requiring detailed technical control
+- ✅ Learning VHDL-FORGE standards in depth (30-question guided tour)
+- ✅ Want full control over every specification detail
+- ✅ Requirements are unclear and need structured exploration
+- ✅ Ask: "I want to create a new VHDL component. Please read workflow/ENGINEER_REQUIREMENTS.md and guide me through the requirements process."
 
 **When to use reference specs:**
 - ✅ Learning spec format and quality standards
@@ -985,21 +1009,23 @@ Cost per test: $0.001 (GPT-4)
 
 **Step 1: Requirements Gathering (Choose Your Approach)**
 
-**Option A: AI-First Workflow (Fast - 2-5 minutes)**
-1. Ask Claude: "I need a [component description]. Use the AI-First requirements workflow."
-2. Review Claude's proposed spec (2-3 critical questions only)
-3. Approve or refine defaults
-4. Spec generated in `workflow/specs/pending/[component].md`
-- **Best for:** Clear requirements, pattern-matched components, fast iteration
+**DEFAULT: AI-First Workflow (Students/Beginners - 2-5 minutes)**
+1. (Optional) Enable learning mode: `/output-style learning`
+2. Ask Claude: "I need a [component description]. Use the AI-First requirements workflow."
+3. Review Claude's proposed spec (2-3 critical questions only)
+4. Approve or refine defaults
+5. Spec generated in `workflow/specs/pending/[component].md`
+- **Best for:** Students, beginners, clear requirements, pattern-matched components, fast iteration
+- **Output style tip:** Use `/output-style learning` for collaborative, educational experience
 - **Reference:** `workflow/AI_FIRST_REQUIREMENTS.md`
 
-**Option B: Interactive Workflow (Thorough - 15-30 minutes)**
-1. Ask Claude: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
+**ALTERNATIVE: Engineer Workflow (Detailed Control - 15-30 minutes)**
+1. Ask Claude: "I want to create a new VHDL component. Please read workflow/ENGINEER_REQUIREMENTS.md and guide me through the requirements process."
 2. Answer 7-phase Q&A session (30 questions)
 3. Review generated spec in `workflow/specs/pending/[component].md`
 4. Edit/refine if needed
-- **Best for:** Learning, novel architectures, full control
-- **Reference:** `workflow/INTERACTIVE_REQUIREMENTS.md`
+- **Best for:** Engineers, novel architectures, complex systems, learning standards in depth, full control
+- **Reference:** `workflow/ENGINEER_REQUIREMENTS.md`
 
 **Step 2: Automated Implementation**
 1. Run: "Read workflow/specs/pending/[component].md and execute the complete 4-agent workflow"
