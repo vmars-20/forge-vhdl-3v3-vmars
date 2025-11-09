@@ -133,6 +133,7 @@ Let's start! What component would you like to build?
 - Load `workflow/AI_FIRST_REQUIREMENTS.md` context
 - Begin AI-First requirements gathering (2-5 questions)
 - DO NOT use /gather-requirements (that's the Engineer workflow)
+- **After spec generation:** Offer cloud handoff (see STEP 5)
 
 ---
 
@@ -162,6 +163,7 @@ Ready to begin? I'll launch the interactive requirements gathering session.
 **Then:**
 - Execute: `/gather-requirements` (delegate to existing command)
 - DO NOT duplicate the logic - the slash command already handles it
+- **After spec generation:** Offer cloud handoff (see STEP 5)
 
 ---
 
@@ -322,25 +324,146 @@ Read workflow/specs/reference/[selected].md and execute the complete 3-agent wor
 
 ---
 
-## STEP 5: Ready State
+## STEP 5: After Specification Generation - Cloud Handoff (RECOMMENDED)
 
-Once workflow is selected and initiated, show:
+**When specification is complete** (in `workflow/specs/pending/`), offer cloud handoff:
 
 ```
-✅ FORGE-START COMPLETE
+✅ SPECIFICATION COMPLETE: workflow/specs/pending/[component].md
 
-Environment: ✅ Local (GHDL [version])
-Settings: ✅ Verified
-Workflow: ✅ [Student/Engineer/Reference] activated
+Your specification is ready! Now you have two options for running the 3-agent workflow:
 
-Next steps:
-1. I'll gather requirements ([fast/detailed])
-2. Generate specification → workflow/specs/pending/
-3. Run 3-agent automated workflow
-4. Deliver: VHDL + Tests + Execution results
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌐 OPTION A: RUN AGENTS IN CLAUDE WEB (RECOMMENDED)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Let's build something great! 🚀
+✅ Benefits:
+  • No token limits (agents run as long as needed)
+  • Browser convenience (no terminal management)
+  • Zero GHDL setup (auto-installs in cloud)
+  • Better for testing (autonomous debugging/iteration)
+  • Incremental git commits (audit trail of agent work)
+
+🚀 Quick Handoff Steps:
+
+1. Commit your specification locally:
+   git add workflow/specs/pending/[component].md
+   git commit -m "spec: Add [component] (AI-First workflow)"
+   git push
+
+2. Open Claude Web (https://claude.ai/)
+   • Start new chat
+   • Attach this repository (Projects → Add)
+
+3. Say to Claude Web:
+   "Read workflow/specs/pending/[component].md and execute the complete
+    3-agent workflow"
+
+4. Claude Web will:
+   • Run Agent 1: forge-vhdl-component-generator
+   • Run Agent 2: cocotb-progressive-test-designer
+   • Run Agent 3: cocotb-progressive-test-runner (with git commits!)
+   • Output artifacts to workflow/artifacts/
+
+5. Pull changes back locally:
+   git pull
+
+6. Review and integrate:
+   mv workflow/artifacts/vhdl/[component].vhd vhdl/components/[category]/
+   # Tests already in cocotb_tests/ (ready to use!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💻 OPTION B: RUN AGENTS LOCALLY (ALTERNATIVE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  Subject to CLI token limits per message
+⚠️  Requires local GHDL installation
+⚠️  Manual agent invocation
+
+Say "run agents locally" if you prefer this option.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Which option would you like?
 ```
+
+**Use `AskUserQuestion` to prompt:**
+
+**Question:** "How would you like to run the 3-agent workflow?"
+
+**Header:** "Execution"
+
+**Options:**
+1. **Label:** "🌐 Cloud (Claude Web)"
+   **Description:** "Recommended. No token limits, zero setup, autonomous debugging. Handoff to browser."
+
+2. **Label:** "💻 Local (CLI)"
+   **Description:** "Run agents here in terminal. Requires GHDL, subject to token limits."
+
+**Handle responses:**
+
+### If user chooses "Cloud (Claude Web)":
+
+```
+Perfect choice! Here's what to do:
+
+1. First, let's commit your specification:
+```
+
+**Then run:**
+```bash
+git add workflow/specs/pending/[component].md
+git commit -m "spec: Add [component] specification (AI-First workflow)"
+git push
+```
+
+**Then show:**
+```
+✅ Specification committed and pushed!
+
+2. Now open Claude Web:
+   • Go to https://claude.ai/
+   • Start a new chat
+   • Attach this repository as a Project
+
+3. Copy/paste this message to Claude Web:
+
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Read workflow/specs/pending/[component].md and
+   execute the complete 3-agent workflow.
+
+   Use the "commit often" pattern from Agent 3's definition.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4. Claude Web will generate VHDL, design tests, run tests, and commit
+   all changes with detailed git messages.
+
+5. When complete, come back here and run:
+   git pull
+
+6. Review the artifacts and integrate to your main codebase!
+
+🎉 You're all set! Good luck with your component development!
+```
+
+**Then STOP** - workflow handed off to cloud.
+
+### If user chooses "Local (CLI)":
+
+```
+Understood. I'll run the 3-agent workflow locally.
+
+⚠️  Note: This may take several messages due to CLI token limits.
+
+Starting 3-agent workflow:
+1. forge-vhdl-component-generator
+2. cocotb-progressive-test-designer
+3. cocotb-progressive-test-runner
+
+Beginning Agent 1...
+```
+
+**Then proceed with local agent execution.**
 
 ---
 
