@@ -983,11 +983,23 @@ Cost per test: $0.001 (GPT-4)
 
 ### Adding New Component (Recommended Workflow)
 
-**Step 1: Requirements Gathering**
+**Step 1: Requirements Gathering (Choose Your Approach)**
+
+**Option A: AI-First Workflow (Fast - 2-5 minutes)**
+1. Ask Claude: "I need a [component description]. Use the AI-First requirements workflow."
+2. Review Claude's proposed spec (2-3 critical questions only)
+3. Approve or refine defaults
+4. Spec generated in `workflow/specs/pending/[component].md`
+- **Best for:** Clear requirements, pattern-matched components, fast iteration
+- **Reference:** `workflow/AI_FIRST_REQUIREMENTS.md`
+
+**Option B: Interactive Workflow (Thorough - 15-30 minutes)**
 1. Ask Claude: "I want to create a new VHDL component. Please read workflow/INTERACTIVE_REQUIREMENTS.md and guide me through the requirements process."
 2. Answer 7-phase Q&A session (30 questions)
 3. Review generated spec in `workflow/specs/pending/[component].md`
 4. Edit/refine if needed
+- **Best for:** Learning, novel architectures, full control
+- **Reference:** `workflow/INTERACTIVE_REQUIREMENTS.md`
 
 **Step 2: Automated Implementation**
 1. Run: "Read workflow/specs/pending/[component].md and execute the complete 4-agent workflow"

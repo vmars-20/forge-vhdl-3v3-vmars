@@ -19,6 +19,18 @@ cp specs/examples/pwm_generator.md specs/pending/my_component.md
 
 **Or** start from scratch - see `specs/README.md` for template.
 
+**Or** use one of two requirements gathering workflows (recommended):
+
+**Option A: AI-First Workflow (Fast - 2-5 minutes)**
+- For clear requirements and pattern-matched components
+- Claude infers defaults, proposes complete spec
+- See `AI_FIRST_REQUIREMENTS.md`
+
+**Option B: Interactive Workflow (Thorough - 15-30 minutes)**
+- For learning or novel architectures
+- 30 guided questions across 7 phases
+- See `INTERACTIVE_REQUIREMENTS.md`
+
 ---
 
 ### 2. Run the Workflow
@@ -249,7 +261,10 @@ Then reference it: `"Follow workflow/prompts/my-custom-workflow.md"`
 
 ## See Also
 
+- `AI_FIRST_REQUIREMENTS.md` - Fast requirements workflow (2-5 min)
+- `INTERACTIVE_REQUIREMENTS.md` - Guided requirements workflow (15-30 min)
 - `.claude/README.md` - Agent workflow details
 - `CLAUDE.md` - Testing standards, VHDL coding rules
 - `SPEC.md` - System setup (GHDL, uv, containers)
 - `specs/README.md` - Spec writing guide
+- `specs/reference/README.md` - Gold-standard pattern library
