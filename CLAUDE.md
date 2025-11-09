@@ -71,8 +71,77 @@ uv run python .claude/env_detect.py
 
 | Environment | Guide | Key Features |
 |-------------|-------|--------------|
-| 💻 **Local CLI** | [CLAUDE_LOCAL.md](.claude/CLAUDE_LOCAL.md) | Output settings validation • Interactive requirements • Manual testing workflow |
-| 🌐 **Cloud/Codespaces** | [CLAUDE_CLOUD.md](.claude/CLAUDE_CLOUD.md) | GHDL auto-install • Zero setup • Browser-based simulation |
+| 💻 **Local CLI** | [CLAUDE_LOCAL.md](.claude/CLAUDE_LOCAL.md) | Output settings validation • Interactive requirements • **Cloud handoff for agents** |
+| 🌐 **Cloud/Codespaces** | [CLAUDE_CLOUD.md](.claude/CLAUDE_CLOUD.md) | GHDL auto-install • Zero setup • **Agent execution** |
+
+---
+
+## 🔄 Hybrid Workflow (RECOMMENDED for Local Users)
+
+**Best practice:** Use each environment for what it does best!
+
+### Local CLI → Requirements Gathering
+
+**Strengths:**
+- ✅ Fast interactive prompts (output settings control)
+- ✅ Quick terminal I/O for questions
+- ✅ Familiar local git workflow
+- ✅ `/forge-start` command for guided workflow
+
+**Use for:**
+1. Run `/forge-start` to choose workflow (Student/Engineer)
+2. Answer requirements questions (2-5 min or 15-30 min)
+3. Review generated specification
+4. Commit spec to git
+
+### Claude Web → Agent Execution
+
+**Strengths:**
+- ✅ No token limits per message (agents run fully)
+- ✅ Zero GHDL setup (auto-installs in cloud)
+- ✅ Autonomous debugging and iteration
+- ✅ Incremental git commits (audit trail)
+
+**Use for:**
+1. Open repository in Claude Web
+2. Say: "Read workflow/specs/pending/[component].md and execute 3-agent workflow"
+3. Agents run autonomously:
+   - Agent 1: Generate VHDL
+   - Agent 2: Design tests
+   - Agent 3: Implement & run tests (with incremental commits!)
+4. Pull results back locally
+
+### Local CLI → Integration
+
+**Strengths:**
+- ✅ Review generated artifacts
+- ✅ Run tests locally
+- ✅ Integrate to production codebase
+- ✅ Commit final work
+
+**Complete pattern:**
+```bash
+# Local: Generate spec
+/forge-start → Answer questions → Spec created
+
+# Local: Commit & push spec
+git add workflow/specs/pending/
+git commit -m "spec: Add [component]"
+git push
+
+# Cloud: Run agents (in Claude Web browser)
+"Read workflow/specs/pending/[component].md and execute 3-agent workflow"
+
+# Local: Pull & integrate
+git pull
+mv workflow/artifacts/vhdl/[component].vhd vhdl/components/[category]/
+# Tests already in cocotb_tests/
+```
+
+**Why this works:**
+- **Local CLI** = Interactive gathering (fast, controlled)
+- **Claude Web** = Long-running agents (unlimited, autonomous)
+- **Local CLI** = Final review (familiar tooling)
 
 ---
 
