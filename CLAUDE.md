@@ -6,7 +6,30 @@
 
 ---
 
-## 🎯 START HERE
+## ⚡ CLAUDE: FIRST ACTION REQUIRED
+
+**CRITICAL:** Before doing anything else in this session, you MUST run environment detection to determine the correct workflow path.
+
+**Action:** Execute this command immediately:
+
+```bash
+uv run python .claude/env_detect.py
+```
+
+**Purpose:**
+- Detect runtime environment (Local CLI vs Cloud)
+- Verify GHDL installation status
+- Route to correct environment-specific guide
+
+**After running detection:**
+- 💻 **Local environment** → Read `.claude/CLAUDE_LOCAL.md` for local-specific instructions
+- 🌐 **Cloud environment** → Read `.claude/CLAUDE_CLOUD.md` for cloud-specific instructions
+
+**DO NOT** proceed with any VHDL tasks until environment is detected and the appropriate guide is loaded.
+
+---
+
+## 🎯 START HERE (User Guide)
 
 This repository automatically configures itself based on your environment. Read this section first, then jump to your environment-specific guide.
 
