@@ -82,20 +82,74 @@ I'll show you a complete spec and ask:
 Does this specification look correct? Should I proceed with automated workflow?
 ```
 
-**Step 4: Automated implementation (if you approve)**
+**Step 4: Specification complete → Choose execution environment**
 
-I'll invoke 3 agents in sequence:
-1. **forge-vhdl-component-generator** → VHDL code
-2. **cocotb-progressive-test-designer** → Test architecture
-3. **cocotb-progressive-test-runner** → Working tests
+Once your specification is ready in `workflow/specs/pending/`, you have **two options**:
 
-**Step 5: Review and integrate**
+**Option A: Run agents in Claude Web (RECOMMENDED)** 🌐
 
-Artifacts appear in `workflow/artifacts/`. You review, then:
-- Move VHDL to `vhdl/components/[category]/`
-- Move tests to `cocotb_tests/components/`
-- Run P1 tests locally
-- Commit to git
+Benefits:
+- ✅ **No token limits** - Agents can run as long as needed
+- ✅ **Browser convenience** - No terminal management
+- ✅ **Zero GHDL setup** - Auto-installs in cloud
+- ✅ **Better for testing** - Agents run tests, debug, iterate autonomously
+
+**How to handoff:**
+1. Commit your specification:
+   ```bash
+   git add workflow/specs/pending/
+   git commit -m "spec: Add [component] specification (AI-First workflow)"
+   git push
+   ```
+
+2. Open your repository in Claude Web:
+   - Go to https://claude.ai/
+   - Start new chat
+   - Attach your repository (Projects → Add)
+   - Say: "Read workflow/specs/pending/[component].md and execute the complete 3-agent workflow"
+
+3. Claude Web will:
+   - Run Agent 1: forge-vhdl-component-generator
+   - Run Agent 2: cocotb-progressive-test-designer
+   - Run Agent 3: cocotb-progressive-test-runner (with incremental git commits!)
+   - Output all artifacts to workflow/artifacts/
+
+4. Pull changes back locally:
+   ```bash
+   git pull
+   ```
+
+5. Review and integrate (local):
+   ```bash
+   # Move to production
+   mv workflow/artifacts/vhdl/[component].vhd vhdl/components/[category]/
+   # Tests already in cocotb_tests/ (ready to use)
+   ```
+
+**Option B: Run agents locally (if you prefer)** 💻
+
+- Manually invoke agents from local CLI
+- Same 3-agent workflow
+- Requires local GHDL installation
+- Subject to CLI token limits per message
+
+---
+
+### 💡 Recommended Workflow Split
+
+**Local CLI strengths:**
+- ✅ Interactive requirements gathering (fast, controlled)
+- ✅ Output settings management
+- ✅ Manual VHDL editing
+- ✅ Final integration and testing
+
+**Claude Web strengths:**
+- ✅ Long-running agent execution
+- ✅ Test debugging and iteration
+- ✅ Autonomous problem-solving
+- ✅ No environment setup
+
+**Optimal pattern:** Gather requirements locally → Execute agents in cloud → Integrate locally
 
 ---
 
